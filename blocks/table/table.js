@@ -32,24 +32,47 @@ async function createTableRow(table, row, i) {
   table.appendChild(tr);
 }
 
+// async function createTable(jsonURL) {
+//   const response = await fetch(jsonURL);
+//   const json = await response.json();
+//   console.log("=====JSON=====", json);
+
+//   const table = document.createElement("table");
+//   table.classList.add("countries-table");
+
+//   await createTableHeader(table);
+
+//   // Use json.data if your JSON is { "data": [ ... ] } or json directly if array
+//   const dataArray = json.data || json;
+//   dataArray.forEach((row, i) => {
+//     createTableRow(table, row, i + 1);
+//   });
+
+//   return table;
+// }
 async function createTable(jsonURL) {
   const response = await fetch(jsonURL);
+  if (!response.ok) {
+    console.error("Failed to fetch JSON:", response.status);
+    return document.createTextNode("Failed to load data");
+  }
   const json = await response.json();
   console.log("=====JSON=====", json);
 
   const table = document.createElement("table");
   table.classList.add("countries-table");
 
-  await createTableHeader(table);
+  createTableHeader(table);
 
-  // Use json.data if your JSON is { "data": [ ... ] } or json directly if array
-  const dataArray = json.data || json;
+  const dataArray = json.data || json; // Adjust according to your JSON structure
+
   dataArray.forEach((row, i) => {
     createTableRow(table, row, i + 1);
   });
 
   return table;
 }
+
 
 export default async function decorate(block) {
   const countriesLink = block.querySelector('a[href$=".json"]');
@@ -136,4 +159,5 @@ export default async function decorate(block) {
 //     countries.replaceWith(parentDiv);
 //   }
 // }
+
 
