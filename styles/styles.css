@@ -256,38 +256,38 @@ main .section.highlight {
   padding: 40px 0;
 }
 
-main.aqua
+.section.aqua
 {
     background-color:aqua;
 }
 
 
-main.yellow
+.section.yellow
 {
     background-color:yellow;
 }
 
 
-main.red
+.section.red
 {
     background-color:red;
 }
 
-main.blue
+.section.blue
 {
    background-color:blue;
 }
 
-main.orange
+.section.orange
 {
     background-color:orange;
 }
 
-main.white-text
+.section.white-text
 {
     color: white;
 }
-main.blueviolet-text
+.section.blueviolet-text
 {
     color:blueviolet;
 }
