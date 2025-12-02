@@ -256,7 +256,35 @@ main .section.highlight {
   padding: 40px 0;
 }
 
-.section.aqua
+main > .section.aqua {
+    background-color: aqua;
+}
+
+main > .section.yellow {
+    background-color: yellow;
+}
+
+main > .section.red {
+    background-color: red;
+}
+
+main > .section.blue {
+   background-color: blue;
+}
+
+main > .section.orange {
+    background-color: orange;
+}
+
+main > .section.white-text {
+    color: white;
+}
+
+main > .section.blueviolet-text {
+    color: blueviolet;
+}
+
+/* .section.aqua
 {
     background-color:aqua;
 }
@@ -290,4 +318,4 @@ main .section.highlight {
 .section.blueviolet-text
 {
     color:blueviolet;
-}
+} */
