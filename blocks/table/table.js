@@ -2,30 +2,26 @@ async function createTableHeader(table) {
   const thead = document.createElement("thead");
   const tr = document.createElement("tr");
 
-  ["S.No", "Countries", "Continent", "Capital", "Abbreviation"].forEach(text => {
-    const th = document.createElement("th");
-    th.textContent = text;
-    tr.appendChild(th);
-  });
+  ["S.No", "Countries", "Continent", "Capital", "Abbreviation"].forEach(
+    (text) => {
+      const th = document.createElement("th");
+      th.textContent = text;
+      tr.appendChild(th);
+    }
+  );
 
   thead.appendChild(tr);
   table.appendChild(thead);
 }
 
-async function createTableRow(table, row, i) {
+function createTableRow(table, row, i) {
   const tr = document.createElement("tr");
 
-  const cells = [
-    i,
-    row.country,
-    row.continent,
-    row.capital,
-    row.abbreviation
-  ];
+  const cells = [i, row.country, row.continent, row.capital, row.abbreviation];
 
-  cells.forEach(val => {
+  cells.forEach((val) => {
     const td = document.createElement("td");
-    td.textContent = val;
+    td.textContent = val || ""; // handle undefined values
     tr.appendChild(td);
   });
 
@@ -33,22 +29,29 @@ async function createTableRow(table, row, i) {
 }
 
 async function createTable(jsonURL) {
-  const response = await fetch(jsonURL);
-  const json = await response.json();
-  console.log("=====JSON=====", json);
+  try {
+    const response = await fetch(jsonURL);
+    if (!response.ok) throw new Error("Failed to fetch JSON");
+    const json = await response.json();
+    console.log("=====JSON=====", json);
 
-  const table = document.createElement("table");
-  table.classList.add("countries-table");
+    const table = document.createElement("table");
+    table.classList.add("countries-table");
 
-  await createTableHeader(table);
+    await createTableHeader(table);
 
-  // Use json.data if your JSON is { "data": [ ... ] } or json directly if array
-  const dataArray = json.data || json;
-  dataArray.forEach((row, i) => {
-    createTableRow(table, row, i + 1);
-  });
+    const dataArray = Array.isArray(json.data) ? json.data : json;
+    dataArray.forEach((row, i) => {
+      createTableRow(table, row, i + 1);
+    });
 
-  return table;
+    return table;
+  } catch (err) {
+    console.error("Error creating table:", err);
+    const errorMsg = document.createElement("div");
+    errorMsg.textContent = "Failed to load table data";
+    return errorMsg;
+  }
 }
 
 export default async function decorate(block) {
